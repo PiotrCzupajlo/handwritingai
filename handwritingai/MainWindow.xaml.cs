@@ -25,12 +25,16 @@ namespace handwritingai
             InitializeComponent();
             int size = 28;
             List<OutputPerceptron> outputPerceptrons = new List<OutputPerceptron>();
+
             outputPerceptrons.Add(new OutputPerceptron("1.jpg",size,1));
             outputPerceptrons.Add(new OutputPerceptron("2.jpg",size,2));
             outputPerceptrons.Add(new OutputPerceptron("3.jpg",size,3));
+            outputPerceptrons.Add(new OutputPerceptron("4.jpg", size, 4));
+            outputPerceptrons.Add(new OutputPerceptron("5.jpg", size, 5));
+
 
             string workingDirectory = Environment.CurrentDirectory;
-            string imagetorecognize = workingDirectory + "\\1.png";
+            string imagetorecognize = workingDirectory + "\\5.png";
             Bitmap mybitmap = new Bitmap(imagetorecognize);
 
             BitmapImage bi = new BitmapImage();
