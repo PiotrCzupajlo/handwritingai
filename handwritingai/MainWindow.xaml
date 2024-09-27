@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="IImagetodetection"></Image>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Detected number"></Label>
+                <Label x:Name="Lresult"></Label>
+                
+                
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

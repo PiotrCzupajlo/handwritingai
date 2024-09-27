@@ -21,14 +21,16 @@ namespace handwritingai.Models
             this.y = y;
         }
         public async Task Howmuchtrue() {
-            int red = color.R;
-            CallOutputLayer(red / 255);
+            decimal red = color.R;
+
+            CallOutputLayer(Decimal.Divide(red, 255));
         
         }
         public void CallOutputLayer(decimal howmuchiamthis) {
 
             foreach (OutputPerceptron item in outputPerceptrons)
-            { 
+            {
+
             item.sum += howmuchiamthis*item.wages[x,y];
             }
         

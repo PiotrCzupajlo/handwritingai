@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Drawing;
 using System;
 using handwritingai.Models;
+using System.IO;
 
 namespace handwritingai
 {
@@ -24,18 +25,25 @@ namespace handwritingai
             InitializeComponent();
             int size = 28;
             List<OutputPerceptron> outputPerceptrons = new List<OutputPerceptron>();
-            outputPerceptrons.Add(new OutputPerceptron("1.jpg",size));
-            outputPerceptrons.Add(new OutputPerceptron("2.jpg",size));
-            outputPerceptrons.Add(new OutputPerceptron("3.jpg",size));
+            outputPerceptrons.Add(new OutputPerceptron("1.jpg",size,1));
+            outputPerceptrons.Add(new OutputPerceptron("2.jpg",size,2));
+            outputPerceptrons.Add(new OutputPerceptron("3.jpg",size,3));
 
+            string workingDirectory = Environment.CurrentDirectory;
+            string imagetorecognize = workingDirectory + "\\1.png";
+            Bitmap mybitmap = new Bitmap(imagetorecognize);
 
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.UriSource = new Uri(imagetorecognize);
+            bi.EndInit();
+            IImagetodetection.Source = bi;
 
-            Bitmap mybitmap = new Bitmap("3.png");
             List<PerceptronBasicFuncionalities> inputs = new List<PerceptronBasicFuncionalities>();
             var task = Task.CompletedTask;
-            for (int i = 1; i < size; i++)
+            for (int i = 9; i < size; i++)
             {
-                for (int j = 1; j < size; j++)
+                for (int j = 0; j < size; j++)
                 {
                     PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j),outputPerceptrons,i,j);
                     inputs.Add(inputperceptorom);
@@ -44,11 +52,18 @@ namespace handwritingai
                 }
             }
             task.Wait();
-
+            decimal max = -1;
+            int detectednumber = 0;
             foreach (OutputPerceptron item in outputPerceptrons)
             {
                 item.percentageofbeing = item.sum / (size * size);
+                if (max < item.percentageofbeing)
+                {
+                    max = item.percentageofbeing;
+                    detectednumber = item.number;
+                }
             }
+            Lresult.Content = detectednumber.ToString();
 
         }
 
