@@ -21,3 +21,4 @@ C:\Users\stasi\source\repos\handwritingai\handwritingai\obj\Debug\net8.0-windows
 C:\Users\stasi\source\repos\handwritingai\handwritingai\obj\Debug\net8.0-windows\handwritingai.pdb
 C:\Users\stasi\source\repos\handwritingai\handwritingai\obj\Debug\net8.0-windows\handwritingai.genruntimeconfig.cache
 C:\Users\stasi\source\repos\handwritingai\handwritingai\obj\Debug\net8.0-windows\ref\handwritingai.dll
+C:\Users\stasi\source\repos\handwritingai\handwritingai\obj\Debug\net8.0-windows\handwritingai.sourcelink.json

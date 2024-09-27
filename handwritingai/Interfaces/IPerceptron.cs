@@ -10,7 +10,7 @@ namespace handwritingai.Interfaces
     {
         public System.Drawing.Color color { get; set; }
         public void howmuchtrue();
-        public void CallNextHiddenLayer(decimal howmuchiamthis);
+        public void CallOutputLayer(decimal howmuchiamthis);
 
 
     }

@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
 using System;
+using handwritingai.Models;
 
 namespace handwritingai
 {
@@ -24,6 +25,16 @@ namespace handwritingai
 
             Bitmap mybitmap = new Bitmap("3.png");
             System.Drawing.Color pixelcolor = mybitmap.GetPixel(6, 6);
+            List<PerceptronBasicFuncionalities> inputs = new List<PerceptronBasicFuncionalities>();
+            for (int i = 1; i < 29; i++)
+            {
+                for (int j = 0; j < 28; j++)
+                {
+                    inputs.Add(new PerceptronBasicFuncionalities(mybitmap.GetPixel(i,j))); ;
+                }
+            }
+
+
 
 
 

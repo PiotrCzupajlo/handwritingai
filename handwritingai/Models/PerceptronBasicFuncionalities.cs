@@ -10,7 +10,10 @@ namespace handwritingai.Models
     public class PerceptronBasicFuncionalities : IPerceptron
     {
         public System.Drawing.Color color { get; set; }
+        public PerceptronBasicFuncionalities(System.Drawing.Color c) {
+            color = c;
+        }
         public void howmuchtrue() { }
-        public void CallNextHiddenLayer(decimal howmuchiamthis) { }
+        public void CallOutputLayer(decimal howmuchiamthis) { }
     }
 }

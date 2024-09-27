@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|solutionrelative:handwritingai\\models\\perceptronbasicfuncionalities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|c:\\users\\stasi\\source\\repos\\handwritingai\\handwritingai\\interfaces\\iperceptron.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|solutionrelative:handwritingai\\interfaces\\iperceptron.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|c:\\users\\stasi\\source\\repos\\handwritingai\\handwritingai\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|solutionrelative:handwritingai\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|c:\\users\\stasi\\source\\repos\\handwritingai\\handwritingai\\interfaces\\iperceptron.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|solutionrelative:handwritingai\\interfaces\\iperceptron.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{869CAAB2-990F-4BB4-9F06-B08557FB0360}|handwritingai\\handwritingai.csproj|c:\\users\\stasi\\source\\repos\\handwritingai\\handwritingai\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "handwritingai\\Models\\PerceptronBasicFuncionalities.cs",
               "ToolTip": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\Models\\PerceptronBasicFuncionalities.cs",
               "RelativeToolTip": "handwritingai\\Models\\PerceptronBasicFuncionalities.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAABDAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T11:00:53.091Z",
               "EditorCaption": ""
@@ -55,18 +55,17 @@
               "RelativeToolTip": "handwritingai\\AssemblyInfo.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T10:51:04.414Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-27T10:51:04.414Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "IPerceptron.cs",
               "DocumentMoniker": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\Interfaces\\IPerceptron.cs",
               "RelativeDocumentMoniker": "handwritingai\\Interfaces\\IPerceptron.cs",
               "ToolTip": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\Interfaces\\IPerceptron.cs",
               "RelativeToolTip": "handwritingai\\Interfaces\\IPerceptron.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAABAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T10:50:38.17Z",
               "EditorCaption": ""
@@ -80,18 +79,17 @@
               "ToolTip": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\MainWindow.xaml",
               "RelativeToolTip": "handwritingai\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-09-27T10:18:53.668Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-27T10:18:53.668Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "handwritingai\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\MainWindow.xaml.cs",
               "RelativeToolTip": "handwritingai\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAIAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T10:18:51.697Z",
               "EditorCaption": ""
