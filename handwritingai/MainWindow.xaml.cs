@@ -23,8 +23,10 @@ namespace handwritingai
         {
             InitializeComponent();
             int size = 28;
-
-
+            List<OutputPerceptron> outputPerceptrons = new List<OutputPerceptron>();
+            outputPerceptrons.Add(new OutputPerceptron("1.jpg",size));
+            outputPerceptrons.Add(new OutputPerceptron("2.jpg",size));
+            outputPerceptrons.Add(new OutputPerceptron("3.jpg",size));
 
 
 
@@ -35,13 +37,18 @@ namespace handwritingai
             {
                 for (int j = 1; j < size; j++)
                 {
-                    PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j));
+                    PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j),outputPerceptrons,i,j);
                     inputs.Add(inputperceptorom);
                     task =  inputperceptorom.Howmuchtrue();
                     
                 }
             }
             task.Wait();
+
+            foreach (OutputPerceptron item in outputPerceptrons)
+            {
+                item.percentageofbeing = item.sum / (size * size);
+            }
 
         }
 
