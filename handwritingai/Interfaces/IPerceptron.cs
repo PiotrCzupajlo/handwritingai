@@ -9,7 +9,6 @@ namespace handwritingai.Interfaces
     internal interface IPerceptron
     {
         public System.Drawing.Color color { get; set; }
-        public void howmuchtrue();
         public void CallOutputLayer(decimal howmuchiamthis);
 
 

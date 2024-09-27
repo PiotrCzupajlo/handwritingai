@@ -23,23 +23,27 @@ namespace handwritingai
         {
             InitializeComponent();
 
+
+
+
+
+
             Bitmap mybitmap = new Bitmap("3.png");
-            System.Drawing.Color pixelcolor = mybitmap.GetPixel(6, 6);
             List<PerceptronBasicFuncionalities> inputs = new List<PerceptronBasicFuncionalities>();
-            for (int i = 1; i < 29; i++)
+            var task = Task.CompletedTask;
+            for (int i = 1; i < 28; i++)
             {
-                for (int j = 0; j < 28; j++)
+                for (int j = 1; j < 28; j++)
                 {
-                    inputs.Add(new PerceptronBasicFuncionalities(mybitmap.GetPixel(i,j))); ;
+                    PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j));
+                    inputs.Add(inputperceptorom);
+                    task =  inputperceptorom.Howmuchtrue();
+                    
                 }
             }
-
-
-
-
-
-
+            task.Wait();
 
         }
+
     }
 }

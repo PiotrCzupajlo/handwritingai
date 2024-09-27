@@ -13,7 +13,11 @@ namespace handwritingai.Models
         public PerceptronBasicFuncionalities(System.Drawing.Color c) {
             color = c;
         }
-        public void howmuchtrue() { }
+        public async Task Howmuchtrue() {
+            int red = color.R;
+            CallOutputLayer(red / 255);
+        
+        }
         public void CallOutputLayer(decimal howmuchiamthis) { }
     }
 }
