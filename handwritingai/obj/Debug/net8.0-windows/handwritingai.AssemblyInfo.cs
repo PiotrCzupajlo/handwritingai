@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("handwritingai")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f2be666c70cff2abba6390df3c217dcb6b3619f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6948a3c4a04cf2556330a63adb59f6c839d3b83")]
 [assembly: System.Reflection.AssemblyProductAttribute("handwritingai")]
 [assembly: System.Reflection.AssemblyTitleAttribute("handwritingai")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

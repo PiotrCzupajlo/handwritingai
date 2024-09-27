@@ -18,6 +18,10 @@ namespace handwritingai.Models
             CallOutputLayer(red / 255);
         
         }
-        public void CallOutputLayer(decimal howmuchiamthis) { }
+        public void CallOutputLayer(decimal howmuchiamthis) {
+        
+        
+        
+        }
     }
 }

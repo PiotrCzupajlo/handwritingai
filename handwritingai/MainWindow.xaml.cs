@@ -22,7 +22,7 @@ namespace handwritingai
         public MainWindow()
         {
             InitializeComponent();
-
+            int size = 28;
 
 
 
@@ -31,9 +31,9 @@ namespace handwritingai
             Bitmap mybitmap = new Bitmap("3.png");
             List<PerceptronBasicFuncionalities> inputs = new List<PerceptronBasicFuncionalities>();
             var task = Task.CompletedTask;
-            for (int i = 1; i < 28; i++)
+            for (int i = 1; i < size; i++)
             {
-                for (int j = 1; j < 28; j++)
+                for (int j = 1; j < size; j++)
                 {
                     PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j));
                     inputs.Add(inputperceptorom);
