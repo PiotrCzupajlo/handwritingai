@@ -12,6 +12,7 @@ using System.Drawing;
 using System;
 using handwritingai.Models;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace handwritingai
 {
@@ -31,6 +32,15 @@ namespace handwritingai
             outputPerceptrons.Add(new OutputPerceptron("3.jpg",size,3));
             outputPerceptrons.Add(new OutputPerceptron("4.jpg", size, 4));
             outputPerceptrons.Add(new OutputPerceptron("5.jpg", size, 5));
+
+
+            /*
+            Bitmap testbitmap = new Bitmap("test.jpg");
+            System.Drawing.Color testcolor = testbitmap.GetPixel(0,0);
+            System.Drawing.Color newtestcolor = System.Drawing.Color.FromArgb(0, testcolor.R + 200,testcolor.G,testcolor.B);
+            testbitmap.SetPixel(0,0,newtestcolor);
+            testbitmap.Save("test1.png", ImageFormat.Png);
+            */
 
 
             string workingDirectory = Environment.CurrentDirectory;
