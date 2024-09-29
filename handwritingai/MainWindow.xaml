@@ -12,10 +12,18 @@
                 <Image x:Name="IImagetodetection"></Image>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Detected number"></Label>
+                <Label Content="Winratio"></Label>
                 <Label x:Name="Lresult"></Label>
                 
                 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="BStart" Click="BStart_Click" Content="Start x100"></Button>
+                <Button x:Name="BStartMore" Click="BStartMore_Click" Content="Start x1000"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Current Error"></Label>
+                <Label x:Name="Current_Error"></Label>
             </StackPanel>
         </StackPanel>
     </Grid>

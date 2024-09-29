@@ -23,7 +23,7 @@ namespace handwritingai.Models
             {
                 for (int j = 0; j < size; j++)
                 {
-                    wages[i,j] = Decimal.Divide(mybitmap.GetPixel(i, j).R, 255);
+                    wages[i,j] =  Decimal.Divide(mybitmap.GetPixel(i, j).R, 255);
 
                 }
             }
