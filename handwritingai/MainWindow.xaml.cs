@@ -114,6 +114,12 @@ namespace handwritingai
                 }
                 decimal winratio = wins/tries;
                 Lresult.Content = winratio.ToString();
+                
+
+
+
+
+
 
 
 
@@ -128,6 +134,30 @@ namespace handwritingai
             List<int> ints = new List<int>();
             string workingDirectory = Environment.CurrentDirectory;
             Bitmap mybitmap = new Bitmap(workingDirectory + "\\1.png"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
             mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
 
 
