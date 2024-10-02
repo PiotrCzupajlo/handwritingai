@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace handwritingai.Models
 {
@@ -13,29 +15,36 @@ namespace handwritingai.Models
         public string filename { get; set; }
         public decimal sum { get; set; }
         public decimal percentageofbeing { get; set; }
-        public decimal[,] wages { get; set; }
-        public decimal[,] wagesold { get; set; }
+        public int[,] wages { get; set; }
+        public int[,] wagesold { get; set; }
         public OutputPerceptron(string file,int size,int n) {
-            wages = new decimal[size, size];
+            wages = new int[size, size];
+            wagesold = new int[size, size];
             number = n;
-            Bitmap mybitmap = new Bitmap(file);
-
-            for (int i = 0; i < size; i++)
+            filename = file;
+            using (Bitmap mybitmap = new Bitmap(file))
             {
-                for (int j = 0; j < size; j++)
+
+                for (int i = 0; i < size; i++)
                 {
-                    wages[i,j] =  Decimal.Divide(mybitmap.GetPixel(i, j).R, 255);
-                    wagesold[i,j]=0;
+                    for (int j = 0; j < size; j++)
+                    {
+                        wages[i, j] = Convert.ToInt32(Decimal.Divide(mybitmap.GetPixel(i, j).R, 255));
+                        wagesold[i, j] = 0;
+                    }
                 }
             }
 
 
+
         }
+        
             public void MakeAChange(){
-            int randomx = Random.Next(0,28);
-            int randomy = Random.Next(0,28);
-            int randomvaluechange = Random.Next(0,10);
-            int randommode = Random.Next(0,2);
+            Random random = new Random();
+            int randomx = random.Next(0,28);
+            int randomy = random.Next(0,28);
+            int randomvaluechange = random.Next(0,10);
+            int randommode = random.Next(0,2);
             wagesold[randomx,randomy]=wages[randomx,randomy];
             if(randommode==0)
             {
@@ -48,17 +57,20 @@ namespace handwritingai.Models
                 wages[randomx,randomy]-=randomvaluechange;
             }
         }
-        public void reshuffle(int size){
-            for(int i=0;i<size;i++)
+        public void reshuffle(int size)
+        {
+            Random random = new Random();
+            for (int i = 0; i < size; i++)
             {
-                for(int j=0;j<size;j++)
+                for (int j = 0; j < size; j++)
                 {
-                    wages[i,j]=Random.Next(0,255);
+                    wages[i, j] = random.Next(0, 255);
 
                 }
 
             }
-            public void redo(int size){
+        }
+            public void undo(int size){
                 for(int i=0;i<size;i++)
                 {
                     for(int j=0;j<size;j++)
@@ -75,10 +87,35 @@ namespace handwritingai.Models
 
                 }
             }
+        public void save(int size) {
+            Bitmap bitmap = new Bitmap(size,size);
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                { 
+                System.Drawing.Color currentcolor = System.Drawing.Color.FromArgb(255, Convert.ToInt32(wages[i,j]),0,255);
+                bitmap.SetPixel(i, j, currentcolor);
+                    string workingDirectory = Environment.CurrentDirectory;
+                    File.Delete(filename);
+                    
+                    bitmap.Save(number+"_templatenew.png",ImageFormat.Png);
+                    File.Move(number + "_templatenew.png", number+"_template.png");
+
+
+                }
+            
+            }
 
 
 
+
+        
+        
         }
+
+
+
+        
 /*
 Bitmap testbitmap = new Bitmap("test.jpg");
 System.Drawing.Color testcolor = testbitmap.GetPixel(0,0);

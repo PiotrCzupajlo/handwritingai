@@ -25,6 +25,13 @@
                 <Label Content="Current Error"></Label>
                 <Label x:Name="Current_Error"></Label>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Restart Maps" x:Name="restart_btn" Click="restart_btn_Click"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="ilosc wykonanych"></Label>
+                <Label x:Name="L_counter"></Label>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

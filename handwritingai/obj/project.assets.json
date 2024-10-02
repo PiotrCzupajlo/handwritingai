@@ -134,11 +134,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\handwritingai.csproj",
+      "projectUniqueName": "C:\\Users\\stasi\\Desktop\\handwritingai\\handwritingai\\handwritingai.csproj",
       "projectName": "handwritingai",
-      "projectPath": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\handwritingai.csproj",
+      "projectPath": "C:\\Users\\stasi\\Desktop\\handwritingai\\handwritingai\\handwritingai.csproj",
       "packagesPath": "C:\\Users\\stasi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\stasi\\source\\repos\\handwritingai\\handwritingai\\obj\\",
+      "outputPath": "C:\\Users\\stasi\\Desktop\\handwritingai\\handwritingai\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

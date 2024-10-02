@@ -25,10 +25,11 @@ namespace handwritingai
         public MainWindow()
         {
             InitializeComponent();
-            
+
 
         }
-        public (int,decimal) CallAi(int size,List<OutputPerceptron> outputPerceptrons,Bitmap mybitmap) {
+        public (int, decimal) CallAi(int size, List<OutputPerceptron> outputPerceptrons, Bitmap mybitmap)
+        {
 
 
             List<PerceptronBasicFuncionalities> inputs = new List<PerceptronBasicFuncionalities>();
@@ -69,6 +70,7 @@ namespace handwritingai
             for (int i = 0; i < 100; i++)
             {
                 setup();
+                L_counter.Content= i.ToString();
             }
         }
 
@@ -77,25 +79,28 @@ namespace handwritingai
             for (int i = 0; i < 1000; i++)
             {
                 setup();
+                L_counter.Content = i.ToString();
             }
         }
-        public List<OutputPerceptron> setupPerceptrons(int size) {
+        public List<OutputPerceptron> setupPerceptrons(int size)
+        {
 
             List<OutputPerceptron> outputPerceptrons = new List<OutputPerceptron>();
 
-            outputPerceptrons.Add(new OutputPerceptron("1.jpg", size, 1));
-            outputPerceptrons.Add(new OutputPerceptron("2.jpg", size, 2));
-            outputPerceptrons.Add(new OutputPerceptron("3.jpg", size, 3));
-            outputPerceptrons.Add(new OutputPerceptron("4.jpg", size, 4));
-            outputPerceptrons.Add(new OutputPerceptron("5.jpg", size, 5));
+            outputPerceptrons.Add(new OutputPerceptron("1_template.png", size, 1));
+            outputPerceptrons.Add(new OutputPerceptron("2_template.png", size, 2));
+            outputPerceptrons.Add(new OutputPerceptron("3_template.png", size, 3));
+            outputPerceptrons.Add(new OutputPerceptron("4_template.png", size, 4));
+            outputPerceptrons.Add(new OutputPerceptron("5_template.png", size, 5));
 
 
             return outputPerceptrons;
         }
-        public void setup() {
+        public void setup()
+        {
             int size = 28;
             List<OutputPerceptron> outputPerceptrons = setupPerceptrons(size);
-            (List<Bitmap> bitmap,List<int> ints) tuple = setupbitmapimage();
+            (List<Bitmap> bitmap, List<int> ints) tuple = setupbitmapimage();
             List<Bitmap> b = tuple.bitmap;
             List<int> expectations = tuple.ints;
             int tries = 0;
@@ -105,66 +110,76 @@ namespace handwritingai
             int k = b.Count;
             for (int i = 0; i < k; i++)
             {
-                (int result, decimal error) result = CallAi(size, outputPerceptrons,b.ElementAt(i));
+                (int result, decimal error) result = CallAi(size, outputPerceptrons, b.ElementAt(i));
                 Current_Error.Content = result.error.ToString();
                 tries++;
                 if (expectations.ElementAt(i) == result.result)
                 {
                     wins++;
                 }
-                decimal winratio = wins/tries;
+                decimal winratio = wins / tries;
                 Lresult.Content = winratio.ToString();
+                foreach (OutputPerceptron output in outputPerceptrons)
+                {
+                    output.MakeAChange();
                 
-
-
-
-
-
-
+                }
+                (int result, decimal error) result2 = CallAi(size, outputPerceptrons, b.ElementAt(i));
+                Current_Error.Content = result2.error.ToString();
+                tries++;
+                if (expectations.ElementAt(i) == result2.result)
+                {
+                    wins++;
+                }
+                winratio = wins / tries;
+                Lresult.Content = winratio.ToString();
+                if (result2.error < result.error)
+                {
+                    foreach (OutputPerceptron output in outputPerceptrons)
+                    {
+                        output.save(size);
+                    }
+                }
+                else {
+                    foreach (OutputPerceptron output in outputPerceptrons)
+                    {
+                        output.undo(size);
+                    }
+                }
 
 
             }
 
 
 
-        
+
         }
-        public (List<Bitmap>,List<int> expected) setupbitmapimage() {
+        public (List<Bitmap>, List<int> expected) setupbitmapimage()
+        {
             List<Bitmap> bitmaps = new List<Bitmap>();
             List<int> ints = new List<int>();
             string workingDirectory = Environment.CurrentDirectory;
             Bitmap mybitmap = new Bitmap(workingDirectory + "\\1.png"); bitmaps.Add(mybitmap); ints.Add(1);
             mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
-            mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
 
 
-            return (bitmaps,ints);
+            return (bitmaps, ints);
         }
 
+        private void restart_btn_Click(object sender, RoutedEventArgs e)
+        {
+            int size = 28;
+            List<OutputPerceptron> outputPerceptrons = setupPerceptrons(size);
+            foreach (OutputPerceptron output in outputPerceptrons)
+            {
+                output.reshuffle(size);
+                output.save(size);
+            }
 
+
+
+
+        }
     }
 }
 /*
