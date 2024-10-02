@@ -18,6 +18,7 @@
                 
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+                <Button x:Name="BStartLess" Click="BStartLess_Click" Content="Start x2"></Button>
                 <Button x:Name="BStart" Click="BStart_Click" Content="Start x100"></Button>
                 <Button x:Name="BStartMore" Click="BStartMore_Click" Content="Start x1000"></Button>
             </StackPanel>
@@ -31,6 +32,13 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="ilosc wykonanych"></Label>
                 <Label x:Name="L_counter"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="save" Click="save_Click" Content="Save"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label x:Name="L_test" Content=""></Label>
+                <Button x:Name="check_btn" Click="check_btn_Click" Content="check"></Button>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -31,7 +31,7 @@ namespace handwritingai.Models
             foreach (OutputPerceptron item in outputPerceptrons)
             {
 
-            item.sum += howmuchiamthis*item.wages[x,y];
+            item.sum += Decimal.Divide(howmuchiamthis*item.wages[x,y],255);
             }
         
         

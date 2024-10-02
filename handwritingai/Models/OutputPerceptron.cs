@@ -17,11 +17,13 @@ namespace handwritingai.Models
         public decimal percentageofbeing { get; set; }
         public int[,] wages { get; set; }
         public int[,] wagesold { get; set; }
+        public int size;
         public OutputPerceptron(string file,int size,int n) {
             wages = new int[size, size];
             wagesold = new int[size, size];
             number = n;
             filename = file;
+            this.size = size;
             using (Bitmap mybitmap = new Bitmap(file))
             {
 
@@ -29,8 +31,8 @@ namespace handwritingai.Models
                 {
                     for (int j = 0; j < size; j++)
                     {
-                        wages[i, j] = Convert.ToInt32(Decimal.Divide(mybitmap.GetPixel(i, j).R, 255));
-                        wagesold[i, j] = 0;
+                        wages[i, j] = mybitmap.GetPixel(i, j).R;
+                        wagesold[i, j] = wages[i,j];
                     }
                 }
             }
@@ -38,14 +40,15 @@ namespace handwritingai.Models
 
 
         }
+
         
             public void MakeAChange(){
             Random random = new Random();
             int randomx = random.Next(0,28);
             int randomy = random.Next(0,28);
-            int randomvaluechange = random.Next(0,10);
+            int randomvaluechange = random.Next(1,10);
             int randommode = random.Next(0,2);
-            wagesold[randomx,randomy]=wages[randomx,randomy];
+            make_equal();
             if(randommode==0)
             {
                 if(wages[randomx,randomy]+randomvaluechange<255)
@@ -54,7 +57,7 @@ namespace handwritingai.Models
             if(randommode==1)
             {
                 if(wages[randomx,randomy]-randomvaluechange>0)
-                wages[randomx,randomy]-=randomvaluechange;
+                wages[randomx,randomy]-= randomvaluechange;
             }
         }
         public void reshuffle(int size)
@@ -69,24 +72,9 @@ namespace handwritingai.Models
                 }
 
             }
+            make_equal();
         }
-            public void undo(int size){
-                for(int i=0;i<size;i++)
-                {
-                    for(int j=0;j<size;j++)
-                    {
-                    if(wagesold[i,j]!=0)
-                    {
-                        wages[i,j]=wagesold[i,j];
-                        wagesold[i,j]=0;
-                        j=size;
-                        i=size;
-                        
-                    }
-                    }
 
-                }
-            }
         public void save(int size) {
             Bitmap bitmap = new Bitmap(size,size);
             for (int i = 0; i < size; i++)
@@ -105,17 +93,26 @@ namespace handwritingai.Models
                 }
             
             }
-
-
-
-
+        }
+        public void make_equal() {
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    wagesold[i, j] = wages[i, j];
+                
+                }
+            
+            }
         
         
         }
-
-
-
+        public void reset() {
+            sum = 0;
+            percentageofbeing = 0;
         
+        }
+
 /*
 Bitmap testbitmap = new Bitmap("test.jpg");
 System.Drawing.Color testcolor = testbitmap.GetPixel(0,0);

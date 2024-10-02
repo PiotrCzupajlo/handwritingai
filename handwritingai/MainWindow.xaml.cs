@@ -22,13 +22,19 @@ namespace handwritingai
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<OutputPerceptron> outputsPerceptrons;
+        List<OutputPerceptron> backup;
+        int size;
+        (List<Bitmap> bitmap, List<int> ints) tuple;
         public MainWindow()
         {
             InitializeComponent();
-
-
+            tuple = setupbitmapimage();
+            size = 28;
+            outputsPerceptrons = setupPerceptrons(size);
+            
         }
-        public (int, decimal) CallAi(int size, List<OutputPerceptron> outputPerceptrons, Bitmap mybitmap)
+        public (int, decimal) CallAi(int size, Bitmap mybitmap)
         {
 
 
@@ -38,7 +44,7 @@ namespace handwritingai
             {
                 for (int j = 0; j < size; j++)
                 {
-                    PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j), outputPerceptrons, i, j);
+                    PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j), outputsPerceptrons, i, j);
                     inputs.Add(inputperceptorom);
                     task = inputperceptorom.Howmuchtrue();
 
@@ -49,7 +55,7 @@ namespace handwritingai
             decimal max = -1;
             int detectednumber = 0;
             decimal error_cost = 0;
-            foreach (OutputPerceptron item in outputPerceptrons)
+            foreach (OutputPerceptron item in outputsPerceptrons)
             {
                 item.percentageofbeing = item.sum / (size * size);
                 if (max < item.percentageofbeing)
@@ -59,18 +65,32 @@ namespace handwritingai
                 }
                 error_cost += (1 - item.percentageofbeing) * (1 - item.percentageofbeing);
             }
-
+            foreach (OutputPerceptron output in outputsPerceptrons)
+            {
+                output.reset();
+            }
             Lresult.Content = detectednumber.ToString();
 
             return (detectednumber, error_cost);
         }
-
+        private void BStartLess_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                decimal error = setup();
+                Current_Error.Content = error.ToString();
+                int counter = Convert.ToInt32(L_counter.Content);
+                L_counter.Content = counter + 1;
+            }
+        }
         private void BStart_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < 100; i++)
             {
-                setup();
-                L_counter.Content= i.ToString();
+                decimal error = setup();
+                Current_Error.Content = error.ToString();
+                int counter=Convert.ToInt32(L_counter.Content);
+                L_counter.Content = counter+1;
             }
         }
 
@@ -78,8 +98,10 @@ namespace handwritingai
         {
             for (int i = 0; i < 1000; i++)
             {
-                setup();
-                L_counter.Content = i.ToString();
+                decimal error = setup();
+                Current_Error.Content = error.ToString();
+                int counter = Convert.ToInt32(L_counter.Content);
+                L_counter.Content = counter + 1;
             }
         }
         public List<OutputPerceptron> setupPerceptrons(int size)
@@ -96,11 +118,11 @@ namespace handwritingai
 
             return outputPerceptrons;
         }
-        public void setup()
+        public decimal setup()
         {
-            int size = 28;
-            List<OutputPerceptron> outputPerceptrons = setupPerceptrons(size);
-            (List<Bitmap> bitmap, List<int> ints) tuple = setupbitmapimage();
+            
+
+            
             List<Bitmap> b = tuple.bitmap;
             List<int> expectations = tuple.ints;
             int tries = 0;
@@ -108,10 +130,13 @@ namespace handwritingai
 
 
             int k = b.Count;
+            decimal currenterror = 0;
             for (int i = 0; i < k; i++)
             {
-                (int result, decimal error) result = CallAi(size, outputPerceptrons, b.ElementAt(i));
-                Current_Error.Content = result.error.ToString();
+
+                (int result, decimal error) result = CallAi(size, b.ElementAt(i));
+                
+                currenterror += result.error;
                 tries++;
                 if (expectations.ElementAt(i) == result.result)
                 {
@@ -119,41 +144,67 @@ namespace handwritingai
                 }
                 decimal winratio = wins / tries;
                 Lresult.Content = winratio.ToString();
-                foreach (OutputPerceptron output in outputPerceptrons)
-                {
-                    output.MakeAChange();
-                
-                }
-                (int result, decimal error) result2 = CallAi(size, outputPerceptrons, b.ElementAt(i));
-                Current_Error.Content = result2.error.ToString();
-                tries++;
-                if (expectations.ElementAt(i) == result2.result)
-                {
-                    wins++;
-                }
-                winratio = wins / tries;
-                Lresult.Content = winratio.ToString();
-                if (result2.error < result.error)
-                {
-                    foreach (OutputPerceptron output in outputPerceptrons)
-                    {
-                        output.save(size);
-                    }
-                }
-                else {
-                    foreach (OutputPerceptron output in outputPerceptrons)
-                    {
-                        output.undo(size);
-                    }
-                }
-
 
             }
+            backup = new List<OutputPerceptron>(outputsPerceptrons) ;
+
+            foreach (OutputPerceptron output in outputsPerceptrons)
+            {
+                output.MakeAChange();
 
 
+                decimal newerror = 0;
 
+                for (int i = 0; i < k; i++)
+                {
+                    (int result, decimal error) result = CallAi(size, b.ElementAt(i));
+                    newerror += result.error;
+                }
+
+                if (currenterror >= newerror)
+                {
+                    currenterror = newerror;
+                    backup= new List<OutputPerceptron>(outputsPerceptrons);
+
+                }
+                else
+                {
+                    outputsPerceptrons = new List<OutputPerceptron> ( backup );
+                }
+            }
+            return currenterror;
+        }
+
+
+        private void restart_btn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            List<OutputPerceptron> outputPerceptrons = outputsPerceptrons;
+            foreach (OutputPerceptron output in outputPerceptrons)
+            {
+                output.reshuffle(size);
+                
+            }
 
         }
+
+        private void save_Click(object sender, RoutedEventArgs e)
+        {
+            
+            foreach (OutputPerceptron output in outputsPerceptrons)
+            {
+                output.save(size);
+            }
+        }
+
+        private void check_btn_Click(object sender, RoutedEventArgs e)
+        {
+            (int result, decimal error) result = CallAi(size, tuple.bitmap.ElementAt(38));
+            L_test.Content = result.error;
+        }
+
+
+
         public (List<Bitmap>, List<int> expected) setupbitmapimage()
         {
             List<Bitmap> bitmaps = new List<Bitmap>();
@@ -161,24 +212,59 @@ namespace handwritingai
             string workingDirectory = Environment.CurrentDirectory;
             Bitmap mybitmap = new Bitmap(workingDirectory + "\\1.png"); bitmaps.Add(mybitmap); ints.Add(1);
             mybitmap = new Bitmap(workingDirectory + "\\1a.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1b.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1c.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1d.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1e.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1f.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1g.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1h.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\1i.jpg"); bitmaps.Add(mybitmap); ints.Add(1);
+            mybitmap = new Bitmap(workingDirectory + "\\2a.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2b.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2c.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2d.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2e.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2f.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2g.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2h.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\2i.jpg"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\3a.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3b.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3c.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3d.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3e.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3f.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3g.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3h.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\3i.jpg"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\4a.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4b.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4c.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4d.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4e.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4f.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4g.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4h.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\4i.jpg"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\5a.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5b.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5c.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5d.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5e.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5f.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5g.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5h.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\5i.jpg"); bitmaps.Add(mybitmap); ints.Add(5);
+            mybitmap = new Bitmap(workingDirectory + "\\2.png"); bitmaps.Add(mybitmap); ints.Add(2);
+            mybitmap = new Bitmap(workingDirectory + "\\3.png"); bitmaps.Add(mybitmap); ints.Add(3);
+            mybitmap = new Bitmap(workingDirectory + "\\4.png"); bitmaps.Add(mybitmap); ints.Add(4);
+            mybitmap = new Bitmap(workingDirectory + "\\5.png"); bitmaps.Add(mybitmap); ints.Add(5);
+
+
 
 
             return (bitmaps, ints);
-        }
-
-        private void restart_btn_Click(object sender, RoutedEventArgs e)
-        {
-            int size = 28;
-            List<OutputPerceptron> outputPerceptrons = setupPerceptrons(size);
-            foreach (OutputPerceptron output in outputPerceptrons)
-            {
-                output.reshuffle(size);
-                output.save(size);
-            }
-
-
-
-
         }
     }
 }
