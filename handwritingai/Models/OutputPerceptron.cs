@@ -16,14 +16,14 @@ namespace handwritingai.Models
         public decimal sum { get; set; }
         public decimal percentageofbeing { get; set; }
         public int[,] wages { get; set; }
-        public int[,] wagesold { get; set; }
         public int size;
+        public int[,] wages_stable { get; set; }
         public OutputPerceptron(string file,int size,int n) {
             wages = new int[size, size];
-            wagesold = new int[size, size];
             number = n;
             filename = file;
             this.size = size;
+            wages_stable = new int[size,size];
             using (Bitmap mybitmap = new Bitmap(file))
             {
 
@@ -32,16 +32,10 @@ namespace handwritingai.Models
                     for (int j = 0; j < size; j++)
                     {
                         wages[i, j] = mybitmap.GetPixel(i, j).R;
-                        wagesold[i, j] = wages[i,j];
                     }
                 }
             }
-
-
-
         }
-
-        
             public void MakeAChange(){
             Random random = new Random();
             int randomx = random.Next(0,28);
@@ -76,30 +70,40 @@ namespace handwritingai.Models
         }
 
         public void save(int size) {
-            Bitmap bitmap = new Bitmap(size,size);
+            wages_stable = Save.returnnew(wages,size);
+        }
+        public void load(int size)
+        {
+            wages = Save.returnnew(wages_stable, size);
+        }
+        public void savetofile(int size)
+        {
+            Bitmap bitmap = new Bitmap(size, size);
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
-                { 
-                System.Drawing.Color currentcolor = System.Drawing.Color.FromArgb(255, Convert.ToInt32(wages[i,j]),0,255);
-                bitmap.SetPixel(i, j, currentcolor);
+                {
+                    System.Drawing.Color currentcolor = System.Drawing.Color.FromArgb(255, Convert.ToInt32(wages[i, j]), 0, 255);
+                    bitmap.SetPixel(i, j, currentcolor);
                     string workingDirectory = Environment.CurrentDirectory;
                     File.Delete(filename);
-                    
-                    bitmap.Save(number+"_templatenew.png",ImageFormat.Png);
-                    File.Move(number + "_templatenew.png", number+"_template.png");
+
+                    bitmap.Save(number + "_templatenew.png", ImageFormat.Png);
+                    File.Move(number + "_templatenew.png", number + "_template.png");
 
 
                 }
-            
+
             }
+
+
         }
         public void make_equal() {
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
-                    wagesold[i, j] = wages[i, j];
+                    wages_stable[i, j] = wages[i, j];
                 
                 }
             

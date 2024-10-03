@@ -170,7 +170,7 @@ namespace handwritingai
                 }
                 else
                 {
-                    outputsPerceptrons = setupPerceptrons(size);
+                    output.load(size);
                 }
             }
             return currenterror;
