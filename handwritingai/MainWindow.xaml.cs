@@ -164,12 +164,13 @@ namespace handwritingai
                 if (currenterror >= newerror)
                 {
                     currenterror = newerror;
-                    backup= new List<OutputPerceptron>(outputsPerceptrons);
+                    //backup = new List<OutputPerceptron>(outputsPerceptrons);
+                    output.save(size);
 
                 }
                 else
                 {
-                    outputsPerceptrons = new List<OutputPerceptron> ( backup );
+                    outputsPerceptrons = setupPerceptrons(size);
                 }
             }
             return currenterror;
