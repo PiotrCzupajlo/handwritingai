@@ -15,6 +15,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Security.Policy;
 
+using System.Diagnostics;
 namespace handwritingai
 {
     /// <summary>
@@ -34,42 +35,51 @@ namespace handwritingai
             outputsPerceptrons = setupPerceptrons(size);
             
         }
-        public (int, decimal) CallAi(int size, Bitmap mybitmap)
+        public (int, decimal) CallAi(int size, Bitmap mybitmap,int expected)
         {
 
 
             List<PerceptronBasicFuncionalities> inputs = new List<PerceptronBasicFuncionalities>();
-            var task = Task.CompletedTask;
-            for (int i = 9; i < size; i++)
+
+            for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
                     PerceptronBasicFuncionalities inputperceptorom = new PerceptronBasicFuncionalities(mybitmap.GetPixel(i, j), outputsPerceptrons, i, j);
                     inputs.Add(inputperceptorom);
-                    task = inputperceptorom.Howmuchtrue();
+                    inputperceptorom.Howmuchtrue();
 
                 }
             }
 
-            task.Wait();
             decimal max = -1;
             int detectednumber = 0;
             decimal error_cost = 0;
-            foreach (OutputPerceptron item in outputsPerceptrons)
+            int m = outputsPerceptrons.Count;
+            for (int i = 0; i < m; i++)
             {
-                item.percentageofbeing = item.sum / (size * size);
-                if (max < item.percentageofbeing)
+
+                outputsPerceptrons.ElementAt(i).percentageofbeing = outputsPerceptrons.ElementAt(i).sum / (size * size);
+                if (max < outputsPerceptrons.ElementAt(i).percentageofbeing)
                 {
-                    max = item.percentageofbeing;
-                    detectednumber = item.number;
+                    max = outputsPerceptrons.ElementAt(i).percentageofbeing;
+                    detectednumber = outputsPerceptrons.ElementAt(i).number;
                 }
-                error_cost += (1 - item.percentageofbeing) * (1 - item.percentageofbeing);
+                if (i == expected)
+                {
+                    error_cost += (1 - outputsPerceptrons.ElementAt(i).percentageofbeing) * (1 - outputsPerceptrons.ElementAt(i).percentageofbeing);
+                }
+                else {
+                    error_cost += outputsPerceptrons.ElementAt(i).percentageofbeing * outputsPerceptrons.ElementAt(1).percentageofbeing;
+                
+                }
             }
             foreach (OutputPerceptron output in outputsPerceptrons)
             {
                 output.reset();
             }
-            Lresult.Content = detectednumber.ToString();
+            if (detectednumber != expected)
+                error_cost += 10;
 
             return (detectednumber, error_cost);
         }
@@ -82,9 +92,16 @@ namespace handwritingai
                 int counter = Convert.ToInt32(L_counter.Content);
                 L_counter.Content = counter + 1;
             }
+            foreach (OutputPerceptron output in outputsPerceptrons)
+            {
+                output.savetofile(size);
+            }
         }
         private void BStart_Click(object sender, RoutedEventArgs e)
         {
+
+
+
             for (int i = 0; i < 100; i++)
             {
                 decimal error = setup();
@@ -92,6 +109,12 @@ namespace handwritingai
                 int counter=Convert.ToInt32(L_counter.Content);
                 L_counter.Content = counter+1;
             }
+            foreach (OutputPerceptron output in outputsPerceptrons)
+            {
+                output.savetofile(size);
+            }
+
+
         }
 
         private void BStartMore_Click(object sender, RoutedEventArgs e)
@@ -102,6 +125,10 @@ namespace handwritingai
                 Current_Error.Content = error.ToString();
                 int counter = Convert.ToInt32(L_counter.Content);
                 L_counter.Content = counter + 1;
+            }
+            foreach (OutputPerceptron output in outputsPerceptrons)
+            {
+                output.savetofile(size);
             }
         }
         public List<OutputPerceptron> setupPerceptrons(int size)
@@ -120,13 +147,10 @@ namespace handwritingai
         }
         public decimal setup()
         {
-            
-
-            
             List<Bitmap> b = tuple.bitmap;
             List<int> expectations = tuple.ints;
-            int tries = 0;
-            int wins = 0;
+            decimal tries = 0;
+            decimal wins = 0;
 
 
             int k = b.Count;
@@ -134,7 +158,7 @@ namespace handwritingai
             for (int i = 0; i < k; i++)
             {
 
-                (int result, decimal error) result = CallAi(size, b.ElementAt(i));
+                (int result, decimal error) result = CallAi(size, b.ElementAt(i),expectations.ElementAt(i));
                 
                 currenterror += result.error;
                 tries++;
@@ -142,7 +166,7 @@ namespace handwritingai
                 {
                     wins++;
                 }
-                decimal winratio = wins / tries;
+                decimal winratio = Decimal.Divide(wins , tries);
                 Lresult.Content = winratio.ToString();
 
             }
@@ -153,11 +177,12 @@ namespace handwritingai
                 output.MakeAChange();
 
 
+
                 decimal newerror = 0;
 
                 for (int i = 0; i < k; i++)
                 {
-                    (int result, decimal error) result = CallAi(size, b.ElementAt(i));
+                    (int result, decimal error) result = CallAi(size, b.ElementAt(i),expectations.ElementAt(i));
                     newerror += result.error;
                 }
 
@@ -194,13 +219,13 @@ namespace handwritingai
             
             foreach (OutputPerceptron output in outputsPerceptrons)
             {
-                output.save(size);
+                output.savetofile(size);
             }
         }
 
         private void check_btn_Click(object sender, RoutedEventArgs e)
         {
-            (int result, decimal error) result = CallAi(size, tuple.bitmap.ElementAt(38));
+            (int result, decimal error) result = CallAi(size, tuple.bitmap.ElementAt(38),tuple.ints.ElementAt(38));
             L_test.Content = result.error;
         }
 

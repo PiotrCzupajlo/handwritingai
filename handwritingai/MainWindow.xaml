@@ -34,6 +34,10 @@
                 <Label x:Name="L_counter"></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+                <Label Content="Czas wykonania zadania"></Label>
+                <Label x:Name="L_time"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <Button x:Name="save" Click="save_Click" Content="Save"></Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal">

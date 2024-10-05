@@ -40,7 +40,7 @@ namespace handwritingai.Models
             Random random = new Random();
             int randomx = random.Next(0,28);
             int randomy = random.Next(0,28);
-            int randomvaluechange = random.Next(1,10);
+            int randomvaluechange = random.Next(1,50);
             int randommode = random.Next(0,2);
             make_equal();
             if(randommode==0)
@@ -91,12 +91,8 @@ namespace handwritingai.Models
                     bitmap.Save(number + "_templatenew.png", ImageFormat.Png);
                     File.Move(number + "_templatenew.png", number + "_template.png");
 
-
                 }
-
             }
-
-
         }
         public void make_equal() {
             for (int i = 0; i < size; i++)
